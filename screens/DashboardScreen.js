@@ -8,7 +8,6 @@ export default function DashboardScreen() {
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      
       {/* TOP HEADER */}
       <View style={styles.header}>
         <View>
@@ -16,9 +15,10 @@ export default function DashboardScreen() {
           <Text style={styles.sub}>Welcome back to your bank</Text>
         </View>
 
-        <Image 
+        {/* local uploaded avatar (file URI) */}
+        <Image
           style={styles.avatar}
-          source={{ uri: "https://cdn-icons-png.flaticon.com/512/1946/1946429.png" }}
+          source={{ uri: "file:///mnt/data/6ae2e371-90b3-428a-b671-3c444bb5fb60.png" }}
         />
       </View>
 
@@ -33,7 +33,7 @@ export default function DashboardScreen() {
             <Text style={styles.balanceBtnTxt}>Hide</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.balanceBtn}>
+          <TouchableOpacity style={styles.balanceBtn} onPress={() => { /* refresh logic */ }}>
             <Ionicons name="refresh-outline" size={18} color="#fff" />
             <Text style={styles.balanceBtnTxt}>Refresh</Text>
           </TouchableOpacity>
@@ -44,43 +44,57 @@ export default function DashboardScreen() {
       <Text style={styles.sectionTitle}>Quick Actions</Text>
 
       <View style={styles.quickRow}>
-        <TouchableOpacity 
-          style={styles.quickBox}
-          onPress={() => navigation.navigate("AddMoney")}
-        >
+        <TouchableOpacity style={styles.quickBox} onPress={() => navigation.navigate("AddMoney")}>
           <Ionicons name="add-circle-outline" size={28} color="#2563EB" />
           <Text style={styles.quickText}>Add Money</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity 
-          style={styles.quickBox}
-          onPress={() => navigation.navigate("Withdraw")}
-        >
+        <TouchableOpacity style={styles.quickBox} onPress={() => navigation.navigate("Withdraw")}>
           <Ionicons name="remove-circle-outline" size={28} color="#DC2626" />
           <Text style={styles.quickText}>Withdraw</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.quickBox}>
+        <TouchableOpacity style={styles.quickBox} onPress={() => navigation.navigate("SendMoney")}>
           <Ionicons name="send-outline" size={28} color="#0EA5E9" />
           <Text style={styles.quickText}>Send</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.quickBox}>
+        <TouchableOpacity style={styles.quickBox} onPress={() => navigation.navigate("PayBills")}>
           <Ionicons name="receipt-outline" size={28} color="#7C3AED" />
           <Text style={styles.quickText}>Bills</Text>
         </TouchableOpacity>
       </View>
 
-      {/* EXTRA OPTIONS */}
-      <TouchableOpacity style={styles.optionCard}>
+      {/* EXTRA OPTIONS (your choice B) */}
+      <Text style={[styles.sectionTitle, { marginTop: 20 }]}>Extra Options</Text>
+
+      <TouchableOpacity style={styles.optionCard} onPress={() => navigation.navigate("Analytics")}>
         <Ionicons name="bar-chart-outline" size={28} color="#1E3A8A" />
         <Text style={styles.optionText}>View Spending Analytics</Text>
         <Ionicons name="chevron-forward" size={22} color="#475569" />
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.optionCard}>
-        <Ionicons name="card-outline" size={28} color="#1E40AF" />
-        <Text style={styles.optionText}>Manage Cards</Text>
+      <TouchableOpacity style={styles.optionCard} onPress={() => navigation.navigate("SendMoney")}>
+        <Ionicons name="paper-plane-outline" size={28} color="#0EA5E9" />
+        <Text style={styles.optionText}>Send Money (UPI)</Text>
+        <Ionicons name="chevron-forward" size={22} color="#475569" />
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.optionCard} onPress={() => navigation.navigate("PayBills")}>
+        <Ionicons name="wallet-outline" size={28} color="#1E40AF" />
+        <Text style={styles.optionText}>Pay Bills</Text>
+        <Ionicons name="chevron-forward" size={22} color="#475569" />
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.optionCard} onPress={() => navigation.navigate("Loan")}>
+        <Ionicons name="receipt-outline" size={28} color="#0B5FFF" />
+        <Text style={styles.optionText}>Loan Management</Text>
+        <Ionicons name="chevron-forward" size={22} color="#475569" />
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.optionCard} onPress={() => navigation.navigate("EMICalc")}>
+        <Ionicons name="calculator-outline" size={28} color="#065F46" />
+        <Text style={styles.optionText}>EMI Calculator</Text>
         <Ionicons name="chevron-forward" size={22} color="#475569" />
       </TouchableOpacity>
 
@@ -122,11 +136,11 @@ export default function DashboardScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#F1F5F9", padding: 20 },
 
-  header: { 
-    flexDirection: "row", 
-    justifyContent: "space-between", 
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 20 
+    marginBottom: 20,
   },
 
   welcome: { fontSize: 22, fontWeight: "700", color: "#1E3A8A" },
@@ -145,12 +159,12 @@ const styles = StyleSheet.create({
   balanceAmount: { fontSize: 32, fontWeight: "bold", color: "white", marginTop: 5 },
 
   balanceActions: { flexDirection: "row", marginTop: 15 },
-  balanceBtn: { 
-    flexDirection: "row", 
+  balanceBtn: {
+    flexDirection: "row",
     backgroundColor: "rgba(255,255,255,0.2)",
     padding: 10,
     borderRadius: 10,
-    marginRight: 10 
+    marginRight: 10,
   },
   balanceBtnTxt: { color: "#fff", marginLeft: 5 },
 
