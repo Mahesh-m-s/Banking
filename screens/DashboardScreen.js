@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function DashboardScreen() {
   const navigation = useNavigation();
+
+  // 🔹 State to hide/show balance
+  const [showBalance, setShowBalance] = useState(true);
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -15,7 +18,7 @@ export default function DashboardScreen() {
           <Text style={styles.sub}>Welcome back to your bank</Text>
         </View>
 
-        {/* local uploaded avatar (file URI) */}
+        {/* LOCAL AVATAR */}
         <Image
           style={styles.avatar}
           source={{ uri: "file:///mnt/data/6ae2e371-90b3-428a-b671-3c444bb5fb60.png" }}
@@ -25,15 +28,29 @@ export default function DashboardScreen() {
       {/* BALANCE CARD */}
       <View style={styles.balanceCard}>
         <Text style={styles.balanceTitle}>Total Balance</Text>
-        <Text style={styles.balanceAmount}>₹ 1,45,200.50</Text>
 
+        {/* BALANCE AMOUNT */}
+        <Text style={styles.balanceAmount}>
+          {showBalance ? "₹ 1,45,200.50" : "******"}
+        </Text>
+
+        {/* BUTTONS */}
         <View style={styles.balanceActions}>
-          <TouchableOpacity style={styles.balanceBtn}>
-            <Ionicons name="eye-outline" size={18} color="#fff" />
-            <Text style={styles.balanceBtnTxt}>Hide</Text>
+          <TouchableOpacity
+            style={styles.balanceBtn}
+            onPress={() => setShowBalance(!showBalance)}
+          >
+            <Ionicons
+              name={showBalance ? "eye-off-outline" : "eye-outline"}
+              size={18}
+              color="#fff"
+            />
+            <Text style={styles.balanceBtnTxt}>
+              {showBalance ? "Hide" : "Show"}
+            </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.balanceBtn} onPress={() => { /* refresh logic */ }}>
+          <TouchableOpacity style={styles.balanceBtn}>
             <Ionicons name="refresh-outline" size={18} color="#fff" />
             <Text style={styles.balanceBtnTxt}>Refresh</Text>
           </TouchableOpacity>
@@ -65,7 +82,7 @@ export default function DashboardScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* EXTRA OPTIONS (your choice B) */}
+      {/* EXTRA OPTIONS */}
       <Text style={[styles.sectionTitle, { marginTop: 20 }]}>Extra Options</Text>
 
       <TouchableOpacity style={styles.optionCard} onPress={() => navigation.navigate("Analytics")}>
